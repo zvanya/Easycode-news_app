@@ -17,11 +17,11 @@ export class AuthService {
         });
     }
     
-    signup(email, password, nickname, first_name, last_name, phone, gender_orientation, city, country, date_of_birth_day, date_of_birth_month, date_of_birth_year) {
+    signup(data) {
         const http = new Http();
         
         return new Promise((resolve, reject) => {
-            http.post(`${ENV.apiUrl}/public/auth/signup`, {email, password, nickname, first_name, last_name, phone, gender_orientation, city, country, date_of_birth_day, date_of_birth_month, date_of_birth_year})
+            http.post(`${ENV.apiUrl}/public/auth/signup`, data)
                 .then((response) => {
                     if (response.error) return reject(response);
                     resolve(response);

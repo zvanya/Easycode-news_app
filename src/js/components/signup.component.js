@@ -8,6 +8,7 @@ export class SignupComponent {
         return `
             <div class="auth-wrap d-flex mt-5">
                 <div class="auth-form col col-6 mx-auto my-auto">
+                    <div class="reg-alert alert" hidden></div>
                     <h3>Enter information for sign up</h3>
                     <p class="text-secondary"></p>
                     <form name="signupForm" novalidate>
@@ -65,15 +66,58 @@ export class SignupComponent {
             const dateOfBirthMonth = e.target.elements['date_of_birth_month'].value;
             const dateOfBirthYear = e.target.elements['date_of_birth_year'].value;
     
-            if (!email || !password || !nickname || !firstName || !lastName || !phone || !sex || !city || !country || !dateOfBirthDay || !dateOfBirthMonth || !dateOfBirthYear) return;
+            if (!email || !password || !nickname || !firstName || !lastName || !phone || !sex || !city || !country || !dateOfBirthDay || !dateOfBirthMonth || !dateOfBirthYear) {
+                this._showMessage("reg-alert", "alert-warning", "Заполните поля регистрационной формы");
+                return;
+            }
             
-            this._authService.signup(email, password, nickname, firstName, lastName, phone, sex, city, country, dateOfBirthDay, dateOfBirthMonth, dateOfBirthYear)
+            const data = {
+                email: email,
+                password: password,
+                nickname: nickname,
+                first_name: firstName,
+                last_name: lastName,
+                phone: phone,
+                gender_orientation: sex,
+                city: city,
+                country: country,
+                date_of_birth_day: dateOfBirthDay,
+                date_of_birth_month: dateOfBirthMonth,
+                date_of_birth_year: dateOfBirthYear
+            };
+            
+            this._authService.signup(data)
                 .then((response) => {
                     console.log(response);
+    
+                    this._showMessage("reg-alert", "alert-success", response.message);
                 })
                 .catch((err) => {
                     console.log(err);
+    
+                    this._showMessage("reg-alert", "alert-danger", err.message);
                 });
         });
     }
+    
+    /**
+     *
+     * @param {String} className
+     * @param {String} type
+     * @param {String} message
+     * @private
+     */
+    _showMessage(className, type, message) {
+        const messageElement = document.querySelector(`.${className}`);
+        
+        messageElement.innerHTML = message;
+        messageElement.classList.add(type);
+        messageElement.removeAttribute("hidden");
+    
+        setTimeout(() => {
+            messageElement.setAttribute("hidden", "false");
+            messageElement.classList.remove(type);
+        }, 5000);
+    }
+
 }
