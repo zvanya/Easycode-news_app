@@ -1,9 +1,16 @@
 import { AuthService } from './../services/auth.service';
+import { Routing } from '../core/routing.service';
 
 export class SignupComponent {
     constructor() {
         this._authService = new AuthService();
+        this._routing = new Routing();
     }
+    
+    async beforeRender() {
+
+    }
+    
     render() {
         return `
             <div class="auth-wrap d-flex mt-5">
@@ -90,12 +97,13 @@ export class SignupComponent {
                 .then((response) => {
                     console.log(response);
     
-                    this._showMessage("reg-alert", "alert-success", response.message);
+                    const routeToRoot = () => { this._routing.navigate(`/`) };
+                    this._showMessage("reg-alert", "alert-success", response.message, 2000).then(routeToRoot);
                 })
                 .catch((err) => {
                     console.log(err);
-    
-                    this._showMessage("reg-alert", "alert-danger", err.message);
+                    
+                    this._showMessage("reg-alert", "alert-danger", err.message, 5000);
                 });
         });
     }
@@ -105,19 +113,23 @@ export class SignupComponent {
      * @param {String} className
      * @param {String} type
      * @param {String} message
+     * @param {Number} delay
      * @private
      */
-    _showMessage(className, type, message) {
-        const messageElement = document.querySelector(`.${className}`);
-        
-        messageElement.innerHTML = message;
-        messageElement.classList.add(type);
-        messageElement.removeAttribute("hidden");
+    _showMessage(className, type, message, delay) {
+        return new Promise( (res) => {
+            const messageElement = document.querySelector(`.${className}`);
     
-        setTimeout(() => {
-            messageElement.setAttribute("hidden", "false");
-            messageElement.classList.remove(type);
-        }, 5000);
+            messageElement.innerHTML = message;
+            messageElement.classList.add(type);
+            messageElement.removeAttribute("hidden");
+    
+            setTimeout(() => {
+                messageElement.setAttribute("hidden", "false");
+                messageElement.classList.remove(type);
+                res();
+            }, delay);
+        });
     }
 
 }

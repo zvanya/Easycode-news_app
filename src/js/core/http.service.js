@@ -14,4 +14,14 @@ export class Http {
             .catch((err) => reject(err));
         });
     }
+    
+    get(url) {
+        return new Promise((resolve, reject) => {
+            // console.log(JSON.stringify(url));
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => resolve(data))
+                .catch((err) => reject(err));
+        });
+    }
 }

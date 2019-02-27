@@ -1,9 +1,8 @@
 {
-  "name": "lesson15",
+  "name": "social-app",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx webpack",
     "start:dev": "webpack-dev-server",
     "watch": "npx webpack --watch"
@@ -24,7 +23,9 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",
+    "jwt-decode": "^2.2.0",
     "popper.js": "^1.14.7"
   },
   "description": ""

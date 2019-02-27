@@ -2,19 +2,26 @@ import { LoginComponent } from './components/login.component';
 import { SignupComponent } from './components/signup.component';
 import { HomeComponent } from './components/home.component';
 import { NotFoundComponent } from './components/notfound.component';
+import { UserComponent } from './components/user.component';
+import { ActiveRoute } from './core/active-route.service';
 
 const routes = {
     '/': new HomeComponent(),
     '/login': new LoginComponent(),
     '/signup': new SignupComponent(),
+    '/users/:id': new UserComponent(),
     '**': new NotFoundComponent()
 };
 
-const router = () => {
-    const container = document.querySelector('app-container');
-    const url = location.hash.slice(1).toLowerCase() || '/';
+const activeRoute = new ActiveRoute();
 
-    const component = routes[url] || routes['**']; 
+const router = async () => {
+    const container = document.querySelector('app-container');
+    const request = activeRoute.parseRequestURL();
+    const url = (request.resourse ? '/' + request.resourse : '/') + (request.id ? '/:id' : '');
+
+    const component = routes[url] || routes['**'];
+    await component.beforeRender();
     container.innerHTML = component.render();
     component.afterRender();
 };
