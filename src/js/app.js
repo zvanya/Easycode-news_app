@@ -1,5 +1,6 @@
 import { LoginComponent } from './components/login.component';
 import { SignupComponent } from './components/signup.component';
+import { NewsComponent } from './components/news.component';
 import { HomeComponent } from './components/home.component';
 import { NotFoundComponent } from './components/notfound.component';
 import { UserComponent } from './components/user.component';
@@ -9,6 +10,7 @@ const routes = {
     '/': new HomeComponent(),
     '/login': new LoginComponent(),
     '/signup': new SignupComponent(),
+    '/news': new NewsComponent(),
     '/users/:id': new UserComponent(),
     '**': new NotFoundComponent()
 };

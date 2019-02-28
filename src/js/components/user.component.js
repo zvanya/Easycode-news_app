@@ -11,7 +11,7 @@ export class UserComponent {
 
         this._authUserId = this._authService.userId;
         this._activeUserId = this._activeRoute.parseRequestURL().id;
-        this._user;
+        // this._user;
     }
 
     async beforeRender() {

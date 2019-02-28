@@ -15,10 +15,13 @@ export class Http {
         });
     }
     
-    get(url) {
+    get(url, headers = {}) {
         return new Promise((resolve, reject) => {
             // console.log(JSON.stringify(url));
-            fetch(url)
+            fetch(url, {
+                method: 'GET',
+                headers: headers
+            })
                 .then((response) => response.json())
                 .then((data) => resolve(data))
                 .catch((err) => reject(err));
