@@ -12,30 +12,41 @@ export class NewsComponent {
     }
     
     async beforeRender() {
-        if (!this._authToken) return;
+        if (!this._authToken) {
+            this._routing.navigate(`/`);
+        }
         
-        this._news = await this._newsService.getNews(this._authToken);
-        
-        console.log(this._news);
+        try {
+            this._news = await this._newsService.getNews(this._authToken);
+        } catch (e) {
+            console.log(`e = ${e}`);
+            this._routing.navigate(`/**`);
+        }
     }
     
     render() {
-        return `
-            <div class="card mb-3" style="max-width: 540px;">
-              <div class="row no-gutters">
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        let marckup = '';
+    
+        for (let i = 0; i < this._news.news.length; i++) {
+            marckup += `
+                <div class="container">
+                  <div class="row" style="padding-top: 40px">
+                    <div class="col-2">
+                      <div class="card-wrapper">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card ...</p>
+                        <p class="card-text"><small class="text-muted">Last updated...</small></p>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <img src="${this._news.news[i].pictures[0].url}" class="card-img" alt="...">
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <img src="${this._news.news[0].pictures[0].url}" class="card-img" alt="...">
-              </div>
-            </div>
-        `;
+            `;
+        }
+        
+        return marckup;
     }
     
     afterRender() {
