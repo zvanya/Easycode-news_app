@@ -13,7 +13,8 @@ export class NewsComponent {
     
     async beforeRender() {
         if (!this._authToken) {
-            return this._routing.navigate(`/login`);
+            this._routing.navigate(`/login`);
+            throw (`Попытка доступа к новостям неавторизированного пользователя - 403`);
         }
         
         try {
