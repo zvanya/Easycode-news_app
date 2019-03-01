@@ -37,7 +37,6 @@ export class NewsComponent {
                   </div>
                 </div>
             `;
-            
         } else if (this._news.news.length === 0) {
             marckup += `
                 <div class="container">
