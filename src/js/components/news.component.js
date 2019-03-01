@@ -14,21 +14,23 @@ export class NewsComponent {
     async beforeRender() {
         if (!this._authToken) {
             this._routing.navigate(`/`);
+            return;
         }
         
         try {
             this._news = await this._newsService.getNews(this._authToken);
         } catch (e) {
-            console.log(`e = ${e}`);
-            this._routing.navigate(`/**`);
+            // console.log(`e = ${e}`);
+            // this._routing.navigate(`/**`);
         }
     }
     
     render() {
         let marckup = '';
     
-        for (let i = 0; i < this._news.news.length; i++) {
-            marckup += `
+        if (this._news) {
+            for (let i = 0; i < this._news.news.length; i++) {
+                marckup += `
                 <div class="container">
                   <div class="row" style="padding-top: 40px">
                     <div class="col-2">
@@ -40,6 +42,17 @@ export class NewsComponent {
                     </div>
                     <div class="col">
                       <img src="${this._news.news[i].pictures[0].url}" class="card-img" alt="...">
+                    </div>
+                  </div>
+                </div>
+            `;
+            }
+        } else {
+            marckup += `
+                <div class="container">
+                  <div class="row" style="padding-top: 40px">
+                    <div class="col">
+                      Не найдено ни одной новости...
                     </div>
                   </div>
                 </div>

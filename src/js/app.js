@@ -23,9 +23,15 @@ const router = async () => {
     const url = (request.resourse ? '/' + request.resourse : '/') + (request.id ? '/:id' : '');
 
     const component = routes[url] || routes['**'];
-    await component.beforeRender();
-    container.innerHTML = component.render();
-    component.afterRender();
+    
+    try {
+        await component.beforeRender();
+        container.innerHTML = component.render();
+        component.afterRender();
+    } catch (e) {
+        console.log(`e1 = ${e}`);
+    }
+
 };
 
 window.addEventListener('load', router);
