@@ -72,11 +72,6 @@ export class SignupComponent {
             const dateOfBirthDay = e.target.elements['date_of_birth_day'].value;
             const dateOfBirthMonth = e.target.elements['date_of_birth_month'].value;
             const dateOfBirthYear = e.target.elements['date_of_birth_year'].value;
-    
-            if (!email || !password || !nickname || !firstName || !lastName || !phone || !sex || !city || !country || !dateOfBirthDay || !dateOfBirthMonth || !dateOfBirthYear) {
-                this._showMessage("reg-alert", "alert-warning", "Заполните поля регистрационной формы");
-                return;
-            }
             
             const data = {
                 email: email,
@@ -92,6 +87,13 @@ export class SignupComponent {
                 date_of_birth_month: dateOfBirthMonth,
                 date_of_birth_year: dateOfBirthYear
             };
+            
+            for (let key in data) {
+                if (!data[key]) {
+                    this._showMessage("reg-alert", "alert-warning", "Заполните поля регистрационной формы", 2000);
+                    return;
+                }
+            }
             
             this._authService.signup(data)
                 .then((response) => {
@@ -116,7 +118,7 @@ export class SignupComponent {
      * @param {Number} delay
      * @private
      */
-    _showMessage(className, type, message, delay) {
+    _showMessage(className, type, message, delay = 1000) {
         return new Promise( (res) => {
             const messageElement = document.querySelector(`.${className}`);
     

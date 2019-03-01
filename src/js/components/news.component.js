@@ -17,11 +17,11 @@ export class NewsComponent {
             throw (`Попытка доступа к новостям неавторизированного пользователя - 403`);
         }
         
-        try {
+        try {   // try-catch тут можно не делать, но на всякий случай, может, нужно перенаправлять на спец.страницу?
             this._news = await this._newsService.getNews(this._authToken);
         } catch (e) {
             // this._routing.navigate(`/**`);
-            // throw (`Ошибка получения новостей getNews: ${e}`)
+            // throw (`Ошибка получения новостей getNews: ${e}`);
         }
     }
     

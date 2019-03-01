@@ -21,7 +21,7 @@ const router = async () => {
     const container = document.querySelector('app-container');
     const request = activeRoute.parseRequestURL();
     const url = (request.resourse ? '/' + request.resourse : '/') + (request.id ? '/:id' : '');
-
+    
     const component = routes[url] || routes['**'];
     
     try {
@@ -31,7 +31,7 @@ const router = async () => {
     } catch (e) {
         console.log(`e.app = ${e}`);
     }
-
+    
 };
 
 window.addEventListener('load', router);
