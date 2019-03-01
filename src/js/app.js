@@ -29,7 +29,7 @@ const router = async () => {
         container.innerHTML = component.render();
         component.afterRender();
     } catch (e) {
-        console.log(`e1 = ${e}`);
+        console.log(`e.app = ${e}`);
     }
 
 };

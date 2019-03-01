@@ -13,21 +13,42 @@ export class NewsComponent {
     
     async beforeRender() {
         if (!this._authToken) {
-            return this._routing.navigate(`/`);;
+            return this._routing.navigate(`/login`);
         }
         
         try {
             this._news = await this._newsService.getNews(this._authToken);
         } catch (e) {
-            // console.log(`e = ${e}`);
             // this._routing.navigate(`/**`);
+            // throw (`Ошибка получения новостей getNews: ${e}`)
         }
     }
     
     render() {
         let marckup = '';
     
-        if (this._news) {
+        if (!this._news) {
+            marckup += `
+                <div class="container">
+                  <div class="row" style="padding-top: 40px">
+                    <div class="col">
+                      Ошибка получения новостей...
+                    </div>
+                  </div>
+                </div>
+            `;
+            
+        } else if (this._news.news.length === 0) {
+            marckup += `
+                <div class="container">
+                  <div class="row" style="padding-top: 40px">
+                    <div class="col">
+                      Не найдено ни одной новости...
+                    </div>
+                  </div>
+                </div>
+            `;
+        } else if (this._news) {
             for (let i = 0; i < this._news.news.length; i++) {
                 marckup += `
                 <div class="container">
@@ -46,16 +67,6 @@ export class NewsComponent {
                 </div>
             `;
             }
-        } else {
-            marckup += `
-                <div class="container">
-                  <div class="row" style="padding-top: 40px">
-                    <div class="col">
-                      Не найдено ни одной новости...
-                    </div>
-                  </div>
-                </div>
-            `;
         }
         
         return marckup;

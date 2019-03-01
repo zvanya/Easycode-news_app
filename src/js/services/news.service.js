@@ -13,7 +13,7 @@ export class NewsService {
         };
         
         return new Promise((resolve, reject) => {
-            http.get(`${ENV.apiUrl}/public/news33`, headers)
+            http.get(`${ENV.apiUrl}/public/news`, headers)
                 .then((response) => {
                     resolve(response);
                 })
