@@ -13,8 +13,7 @@ export class NewsComponent {
     
     async beforeRender() {
         if (!this._authToken) {
-            this._routing.navigate(`/`);
-            return;
+            return this._routing.navigate(`/`);;
         }
         
         try {
