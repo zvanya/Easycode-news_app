@@ -8,7 +8,9 @@ export class SignupComponent {
     }
     
     async beforeRender() {
-
+        if (this._authService.token) {
+            this._routing.navigate(`/users/${this._authService.userId}`);
+        }
     }
     
     render() {

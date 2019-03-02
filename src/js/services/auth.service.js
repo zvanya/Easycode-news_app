@@ -25,6 +25,17 @@ export class AuthService {
         });
     }
     
+    logout() {
+        // use promise to mimic async logout functionality
+        return new Promise((resolve, reject) => {
+            localStorage.removeItem('sn_user_id');
+            localStorage.removeItem('sn_user_token');
+            
+            resolve();
+        });
+        
+    }
+    
     signup(data) {
         const http = new Http();
         

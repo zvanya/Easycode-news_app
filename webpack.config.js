@@ -45,5 +45,5 @@ module.exports = {
             title: 'My App'
         })
     ],
-    mode: 'production'
+    mode: 'development'
 };
