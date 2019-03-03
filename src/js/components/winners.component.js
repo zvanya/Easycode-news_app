@@ -9,7 +9,6 @@ export class WinnersComponent {
     
     async beforeRender() {
         this._winners = await this._winnersService.getWinners(5, 1);
-        console.log(this._winners);
     }
     
     render() {

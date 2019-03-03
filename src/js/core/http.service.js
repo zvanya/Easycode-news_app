@@ -1,7 +1,6 @@
 export class Http {
     post(url, data, options) {
         return new Promise((resolve, reject) => {
-            // console.log(JSON.stringify(data));
             fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -17,7 +16,6 @@ export class Http {
     
     get(url, headers = {}) {
         return new Promise((resolve, reject) => {
-            // console.log(JSON.stringify(url));
             fetch(url, {
                 method: 'GET',
                 headers: headers
