@@ -60,7 +60,7 @@ export class WinnersComponent {
     
     afterRender() {
         window.addEventListener("scroll", async (e) => {
-            const lastImgThumbnail = document.getElementById(`img-thumbnail-${this._imgThmbLastId}`);
+            const lastImgThumbnail = document.getElementById("winners-container").lastElementChild;
             
             if (this._isElementInViewport(lastImgThumbnail) && this._imgThmbLastVisible === 0) {
                 this._imgThmbLastVisible = 1;
@@ -75,8 +75,9 @@ export class WinnersComponent {
     
     _renderAddWinners() {
         let marckupIn = ``;
-    
+        // console.log(`this._imgThmbLastId: ${this._imgThmbLastId}`);
         for (let i = 0; i < this._winners.winners.length; i++) {
+            // debugger;
             marckupIn += this._templateWinnerImg(i, i + this._imgThmbLastId + 1);
         }
     
