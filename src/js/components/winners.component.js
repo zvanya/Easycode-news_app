@@ -6,7 +6,6 @@ export class WinnersComponent {
         
         this._limit = 5;
         this._part = 1;
-        this._imgThmbLastId = 0;
         this._imgThmbLastVisible = 0;
         this._winners;
     }
@@ -42,9 +41,8 @@ export class WinnersComponent {
         } else if (this._winners) {
     
             for (let i = 0; i < this._winners.winners.length; i++) {
-                marckupIn += this._templateWinnerImg(i, i);
+                marckupIn += this._templateWinnerImg(i);
             }
-            this._imgThmbLastId = this._winners.winners.length - 1;
             
             marckup = `
                 <div class="container">
@@ -75,26 +73,21 @@ export class WinnersComponent {
     
     _renderAddWinners() {
         let marckupIn = ``;
-        // console.log(`this._imgThmbLastId: ${this._imgThmbLastId}`);
         for (let i = 0; i < this._winners.winners.length; i++) {
-            // debugger;
-            marckupIn += this._templateWinnerImg(i, i + this._imgThmbLastId + 1);
+            marckupIn += this._templateWinnerImg(i);
         }
     
         document.getElementById("winners-container").insertAdjacentHTML("beforeend", marckupIn);
-    
-        this._imgThmbLastId += this._winners.winners.length - 1;
     }
     
     /**
      *
      * @param {Number} index
-     * @param {Number} idNumber
      * @returns {string}
      * @private
      */
-    _templateWinnerImg(index, idNumber) {
-        return `<img id=img-thumbnail-${idNumber} src="${this._winners.winners[index].member_id.images[0].image_basic.url}" class="img-thumbnail rounded" alt="..." style="width: auto; height: 300px; margin: 2px">`
+    _templateWinnerImg(index) {
+        return `<img src="${this._winners.winners[index].member_id.images[0].image_basic.url}" class="img-thumbnail rounded" alt="..." style="width: auto; height: 300px; margin: 2px">`
     }
     
     _isElementInViewport(el) {
